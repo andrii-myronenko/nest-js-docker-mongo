@@ -6,11 +6,5 @@
   "logging": false,
   "entities": [
     "dist/**/*.entity{.ts,.js}"
-  ],
-  "migrations": [
-    "src/migration/*{.ts,.js}"
-  ],
-  "cli": {
-    "subscribersDir": "src/subscriber"
-  }
+  ]
 }

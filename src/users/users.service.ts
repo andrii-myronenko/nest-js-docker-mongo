@@ -14,8 +14,12 @@ export class UsersService {
         return this.usersRepository.find();
     }
 
-    findOne(id: string): Promise<User> {
+    findOne(id: string): Promise<User | undefined> {
         return this.usersRepository.findOne(id);
+    }
+
+    create(user: Partial<User>): Promise<User> {
+        return this.usersRepository.save(user);
     }
 
     async remove(id: string): Promise<void> {
