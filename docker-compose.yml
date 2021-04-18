@@ -5,17 +5,13 @@ services:
     container_name: main
     build:
       context: .
-      target: development
     volumes:
       - .:/usr/src/app
     env_file:
       - .env
     ports:
       - ${SERVER_PORT}:${SERVER_PORT}
-      - 9229:9229
     command: npm run start:dev
-    networks:
-      - localhost
     depends_on:
       - mongo
   mongo:
@@ -24,9 +20,5 @@ services:
         - 27017:27017
       volumes:
         - mongodb_data_container:/data/db
-      networks:
-      - localhost
-networks:
-  localhost:
 volumes:
   mongodb_data_container:
