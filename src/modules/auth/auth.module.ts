@@ -1,23 +1,24 @@
+import { AppConfigurationService } from './../../core/configuration/app-configuration/app-configuration.service';
 import { JwtStrategy } from './jwt.strategy';
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
-import { UsersModule } from 'src/users/users.module';
+import { UsersModule } from 'src/modules/users/users.module';
 import { AuthService } from './auth.service';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { AppConfigurationModule } from 'src/core/configuration/app-configuration.module';
 
 @Module({
     imports: [
         UsersModule,
-        ConfigModule,
+        AppConfigurationModule,
         PassportModule,
         JwtModule.registerAsync({
-            imports: [ConfigModule],
-            useFactory: async (configService: ConfigService) => ({
-                secret: configService.get<string>('SECRET'),
+            imports: [AppConfigurationModule],
+            useFactory: (configService: AppConfigurationService) => ({
+                secret: configService.secret,
                 signOptions: { expiresIn: '120s' },
             }),
-            inject: [ConfigService],
+            inject: [AppConfigurationService],
         }),
     ],
     providers: [AuthService, JwtStrategy],

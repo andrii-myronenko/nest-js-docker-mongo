@@ -16,18 +16,18 @@ export class UsersService {
         return this.usersRepository.find();
     }
 
-    findOne(username: string): Promise<User | undefined> {
+    findOne(email: string): Promise<User | undefined> {
         return this.usersRepository.findOne({
-            username,
+            email,
         });
     }
 
-    async create(user: Partial<User>): Promise<User> {
-        console.log(user);
+    async create(user: Omit<User, 'id'>): Promise<User> {
         const hashedPassword = await bcrypt.hash(user.password, saltRounds);
 
         return this.usersRepository.save({
-            username: user.username,
+            email: user.email,
+            name: user.name,
             password: hashedPassword,
         });
     }
